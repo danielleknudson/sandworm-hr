@@ -223,11 +223,13 @@ var GraphView = Backbone.View.extend({
   },
 
   render: function () {
+    console.log('in graph render function')
     this.$el.hide();
     this.$el.empty();
     if (this.collection.length > 0) {
       this.$el.show();
       this.plotLine(this.collection, this);
+      console.log(this.$el);
       return this.$el;
     }
   }

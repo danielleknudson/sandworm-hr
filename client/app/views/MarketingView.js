@@ -8,6 +8,12 @@ var MarketingPage = Backbone.View.extend({
   initialize: function(){
     this.signupView = new SignupView({model: this.model});
     this.signinView = new SigninView({model: this.model});
+    this.formView = new FormView({collection: this.collection});
+    this.graphView = new GraphView({collection: this.collection});
+    this.infoView = new InfoView({collection: this.collection});
+
+    this.formView.delegateEvents();
+
     this.render();
   },
   template: _.template('<div class="ui menu"> \
@@ -26,7 +32,7 @@ var MarketingPage = Backbone.View.extend({
             </div> \
           '),
   render: function(){
-    this.$el.html(this.template);
+    this.$el.html([this.template, this.formView.$el, this.graphView.$el]);
   },
 
   handleSignin: function(){

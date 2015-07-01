@@ -10,8 +10,7 @@ var AppView = Backbone.View.extend({
       this.render();
     }, this);
 
-    this.marketingView = new MarketingPage({model: this.model});
-    this.formView = new FormView({collection: this.collection});
+    this.marketingView = new MarketingPage({model: this.model, collection: this.collection});
     this.dashboardView = new DashboardView({collection: this.collection});
     
     this.aboutusView = new AboutUsView();
@@ -30,7 +29,6 @@ var AppView = Backbone.View.extend({
     this.$el.empty();
     view.delegateEvents();
     this.marketingView.delegateEvents();
-    this.formView.delegateEvents();
     this.dashboardView.delegateEvents();
     this.dashboardView.infoView.delegateEvents();
     this.$el.append([

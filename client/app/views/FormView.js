@@ -3,32 +3,16 @@ var FormView = Backbone.View.extend({
 
   className: 'form container',
 
-  divText: '\
-      <div class="container"> \
-        <div class="row"> \
-          <div class="col-sm-4 col-sm-offset-4 well text-center" id="select-form">\
-            <form data-toggle="validator" role="form">\
-              <div class="form-group"> \
-                <label for="symbol">Stock Symbol</label>\
-                <input pattern="[a-zA-Z0-9-]{1,6}" maxlength="6" type="text" id="symbol" class="form-control" data-error="Invalid Stock Ticker" required>\
-                <div class="error-message help-block with-errors"></div>\
-              </div> \
-              <div class="form-group"> \
-                <label for="date">Date</label>\
-                <input pattern="^(?!.*00/).*$" type="date" id="date" class="form-control" data-error="Invalid Date" required>\
-                <div class="help-block with-errors">After 1972</div>\
-              </div> \
-              <div class="form-group"> \
-                 <label for="amount">Amount ($)</label>\
-                 <input type="number" id="amount" class="form-control" data-error="Invalid amount" required>\
-                 <div class="help-block with-errors"></div>\
-              </div> \
+  divText: '<form data-toggle="validator" role="form">\
+              <label for="symbol">Stock Symbol</label>\
+              <input pattern="[a-zA-Z0-9-]{1,6}" maxlength="6" type="text" id="symbol" class="form-control" data-error="Invalid Stock Ticker" required>\
+              <label for="date">Date</label>\
+              <input pattern="^(?!.*00/).*$" type="date" id="date" class="form-control" data-error="Invalid Date" required>\
+               <label for="amount">Amount ($)</label>\
+               <input type="number" id="amount" class="form-control" data-error="Invalid amount" required>\
               <button type="submit" class="btn btn-xs submit-button">Submit</button>\
               <img id="spinner" src="assets/images/loader.gif">\
-            </form>\
-          </div> \
-        </div> \
-      </div>',
+            </form>',
 
   initialize: function(){
     this.render();
@@ -52,6 +36,7 @@ var FormView = Backbone.View.extend({
   },
 
   handleDuplicates: function(params) {
+    console.log('in handleDuplicates');
     var stocks = this.collection;
 
     var existingStock = stocks.findStock(params.symbol);
@@ -89,6 +74,7 @@ var FormView = Backbone.View.extend({
         amount: this.$('#amount').val(),
         to: d.toISOString().slice(0,10) //Just the YYYY-MM-DD portion
       };
+      console.log(requestStock);
       this.handleDuplicates(requestStock);
     } else {
       this.$('form')[0].reset();

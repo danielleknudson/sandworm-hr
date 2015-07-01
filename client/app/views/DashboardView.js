@@ -19,6 +19,7 @@ var DashboardView = Backbone.View.extend({
                         </div>'),
 
   initialize: function(){
+    this.formView = new FormView({collection: this.collection});
     this.graphView = new GraphView({collection: this.collection});
     this.infoView = new InfoView({collection: this.collection});
     this.collection.on('add reset', function() {
@@ -33,7 +34,7 @@ var DashboardView = Backbone.View.extend({
 
   render: function(){
     console.log(this.graphView.$el);
-    this.$el.html(this.template);
+    this.$el.html([this.template, this.formView.$el]);
     // return this.$el.html([
     //   this.graphView.$el,
     //   this.infoView.$el
