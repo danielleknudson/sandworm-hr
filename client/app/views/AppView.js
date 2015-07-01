@@ -4,6 +4,13 @@ var AppView = Backbone.View.extend({
   el:'#main',
 
   initialize: function(){
+    console.log(this.model.get('signedin'));
+
+    this.model.on('change', function(){
+      this.render();
+    }, this);
+
+    this.marketingView = new MarketingPage({model: this.model});
     this.formView = new FormView({collection: this.collection});
     this.dashboardView = new DashboardView({collection: this.collection});
     
@@ -19,15 +26,15 @@ var AppView = Backbone.View.extend({
     this.dashboardView.setUsername(name);
   },
 
-  renderBody: function(view, renderDashboard) {
+  renderBody: function(view) {
     this.$el.empty();
     view.delegateEvents();
+    this.marketingView.delegateEvents();
     this.formView.delegateEvents();
     this.dashboardView.delegateEvents();
     this.dashboardView.infoView.delegateEvents();
     this.$el.append([
-      view.$el,
-      this.dashboardView.$el
+      view.$el
     ]);
   },
 
@@ -39,12 +46,16 @@ var AppView = Backbone.View.extend({
       success: function (response) {
         context.model.set('signedin', true);
         context.setUsername(response);
-        context.renderBody(context.formView);
+        context.renderBody(context.dashboardView);
        },
       error: function() {
-        context.renderBody(context.formView);
+        context.renderBody(context.marketingView);
       }
     });
+  },
+
+  dashboard: function(){
+    this.renderBody(this.dashboardView, false);
   },
 
   signup: function() {

@@ -66,12 +66,14 @@ var SignupView = Backbone.View.extend({
       type: "POST",
       data: userSignup,
       success: function (result) {
+        console.log('successful sign up');
         context.model.set('username', userSignup.username);
         context.model.set('signedin', true);
         window.location.hash = 'front';
         context.stopSpinner();
       },
       error: function(error) {
+        console.log('error signing up');
         context.handleSignupError();
         context.stopSpinner();
       }

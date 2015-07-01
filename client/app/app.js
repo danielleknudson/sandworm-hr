@@ -15,6 +15,7 @@
       }
     });
   };
+
   router.on('route:portfolio', function () {
     appView.render(appView.portfolios);
   });
